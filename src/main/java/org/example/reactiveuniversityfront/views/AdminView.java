@@ -5,13 +5,11 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
-@Route("/oooo")
-public class AuthView extends VerticalLayout {
+@Route("admin")
+public class AdminView extends VerticalLayout {
+    public AdminView() {
 
-
-    public AuthView() {
-
-        add(new H1("Welcome to your new application"));
+        add(new H1("admin"));
         add(new Paragraph("This is the home view"));
 
         add(new Paragraph("You can edit this view in src\\main\\java\\org\\example\\reactiveuniversityfront\\views\\HomeView.java"));

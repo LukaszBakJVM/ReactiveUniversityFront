@@ -2,7 +2,9 @@ package org.example.reactiveuniversityfront.auth;
 
 import org.example.reactiveuniversityfront.auth.dto.AuthRequest;
 import org.example.reactiveuniversityfront.auth.dto.AuthResponse;
+import org.example.reactiveuniversityfront.exception.BadCredentialsExceptions;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -22,7 +24,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse authorization(AuthRequest request) {
-        return restClient.post().uri(url("/login")).body(request).contentType(MediaType.APPLICATION_JSON).retrieve().body(AuthResponse.class);
+        return restClient.post().uri(url("/login")).body(request).contentType(MediaType.APPLICATION_JSON).retrieve().onStatus(HttpStatusCode::is4xxClientError, (request1, response) -> {
+            throw new BadCredentialsExceptions("Bad Credentials");
+        }).body(AuthResponse.class);
     }
 
 

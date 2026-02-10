@@ -1,3 +1,8 @@
-vaadin.launch-browser: true
-spring.application.name: ReactiveUniversityFront
-reactiveUrl: localhost:8080
+vaadin:
+ launch-browser: true
+spring:
+ application:
+  name: ReactiveUniversityFront
+reactiveUrl: http://localhost:8080
+server:
+  port: 9090

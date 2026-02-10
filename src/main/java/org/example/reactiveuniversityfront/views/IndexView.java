@@ -1,12 +1,11 @@
 package org.example.reactiveuniversityfront.views;
 
-import com.vaadin.copilot.userinfo.UserInfo;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
 import org.example.reactiveuniversityfront.auth.UserInfoService;
-import org.example.reactiveuniversityfront.auth.UserInfoServiceImpl;
+import org.example.reactiveuniversityfront.auth.dto.UserInfo;
 
 @Route("")
 public class IndexView extends VerticalLayout implements BeforeEnterObserver {
@@ -20,27 +19,29 @@ public class IndexView extends VerticalLayout implements BeforeEnterObserver {
     @Override
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
 
-       /* UserInfo userInfo = userInfoService.getCurrentUser();
+        UserInfo userInfo = userInfoService.getCurrentUser();
 
         if (userInfo == null) {
 
-          //  event.rerouteTo(LoginView.class);
+            beforeEnterEvent.rerouteTo(LoginView.class);
         } else {
 
-            switch (userInfo.getRole()) {
-                case "ADMIN":
-                    event.rerouteTo(AdminView.class);
+            switch (userInfo.role()) {
+                case "Office":
+                    beforeEnterEvent.rerouteTo(AdminView.class);
                     break;
-                case "USER":
-                    event.rerouteTo(UserView.class);
+                case "Teacher":
+                    beforeEnterEvent.rerouteTo(TeacherView.class);
                     break;
-                default:
-                    event.rerouteTo(DefaultView.class);
+                case "Student":
+                    beforeEnterEvent.rerouteTo(StudentView.class);
+                    break;
+
             }
         }
-    }*/
+    }
 
     }
 
-}
+
 

@@ -11,16 +11,20 @@ import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 public class UserInfoServiceImpl  implements  UserInfoService {
     @Value("${reactiveUrl}")
     private String reactiveUrl;
-    private final RestClient restClient;
 
-    public UserInfoServiceImpl(RestClient restClient) {
+    private final RestClient restClient;
+    private final AuthSession authSession;
+
+    public UserInfoServiceImpl(RestClient restClient, AuthSession authSession) {
         this.restClient = restClient;
+        this.authSession = authSession;
     }
 
 
     @Override
     public UserInfo getCurrentUser() {
-     return    restClient.get().uri(url(getTokenFromRequest())).retrieve().body(UserInfo.class);
+        return restClient.get().uri(url(getTokenFromRequest())).retrieve().body(UserInfo.class);
+
 
     }
 
@@ -30,15 +34,8 @@ public class UserInfoServiceImpl  implements  UserInfoService {
     }
 
     private String getTokenFromRequest() {
-        // Przykład pobrania tokena z ciasteczka Vaadin
-        return com.vaadin.flow.server.VaadinService.getCurrentRequest()
-                .getWrappedSession()
-                .getAttribute("authToken") != null ?
-                (String) com.vaadin.flow.server.VaadinService.getCurrentRequest()
-                        .getWrappedSession()
-                        .getAttribute("authToken")
-                : null;
+       return authSession.getToken();
+
     }
 }
-
 
