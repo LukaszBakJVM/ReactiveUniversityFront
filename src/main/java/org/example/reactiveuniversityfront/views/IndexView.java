@@ -41,7 +41,7 @@ public class IndexView extends VerticalLayout implements BeforeEnterObserver {
         }
     }
 
-    }
+}
 
 
 

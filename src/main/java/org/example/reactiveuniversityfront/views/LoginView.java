@@ -37,6 +37,11 @@ public class LoginView extends VerticalLayout {
         passwordField.setRequired(true);
 
 
+
+
+
+
+
         Button loginButton = new Button("zaloguj", event -> login());
         add(header, emailField, passwordField, loginButton);
     }

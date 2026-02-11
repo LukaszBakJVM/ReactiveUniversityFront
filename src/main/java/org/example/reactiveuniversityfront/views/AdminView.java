@@ -1,18 +1,19 @@
 package org.example.reactiveuniversityfront.views;
 
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouterLink;
 
 @Route("admin")
 public class AdminView extends VerticalLayout {
     public AdminView() {
+        RouterLink link = new RouterLink("Zarejstruj się", RegisterView.class);
 
-        add(new H1("admin"));
-        add(new Paragraph("This is the home view"));
+        Button registration = new Button("Zarejstruj się", e -> UI.getCurrent().navigate(RegisterView.class));
+        add(registration, link);
 
-        add(new Paragraph("You can edit this view in src\\main\\java\\org\\example\\reactiveuniversityfront\\views\\HomeView.java"));
 
     }
 }

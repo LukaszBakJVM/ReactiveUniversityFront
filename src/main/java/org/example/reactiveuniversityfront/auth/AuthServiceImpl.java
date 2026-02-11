@@ -3,37 +3,31 @@ package org.example.reactiveuniversityfront.auth;
 import org.example.reactiveuniversityfront.auth.dto.AuthRequest;
 import org.example.reactiveuniversityfront.auth.dto.AuthResponse;
 import org.example.reactiveuniversityfront.exception.BadCredentialsExceptions;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
-import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
-
 @Service
+@Qualifier("AuthServiceImpl")
 public class AuthServiceImpl implements AuthService {
-    @Value("${reactiveUrl}")
-    private String reactiveUrl;
+
 
     private final RestClient restClient;
 
-    public AuthServiceImpl(RestClient restClient) {
+    public AuthServiceImpl(@Qualifier("reactiveUrl") RestClient restClient) {
         this.restClient = restClient;
     }
 
     @Override
     public AuthResponse authorization(AuthRequest request) {
-        return restClient.post().uri(url("/login")).body(request).contentType(MediaType.APPLICATION_JSON).retrieve().onStatus(HttpStatusCode::is4xxClientError, (request1, response) -> {
+        return restClient.post().uri("/login").body(request).contentType(MediaType.APPLICATION_JSON).retrieve().onStatus(HttpStatusCode::is4xxClientError, (request1, response) -> {
             throw new BadCredentialsExceptions("Bad Credentials");
         }).body(AuthResponse.class);
     }
 
 
-    private String url(final String path) {
-        return fromUriString(reactiveUrl).path(path).toUriString();
-
-    }
 }
 
 
