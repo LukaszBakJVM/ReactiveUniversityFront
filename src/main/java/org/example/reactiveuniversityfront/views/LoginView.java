@@ -57,7 +57,7 @@ public class LoginView extends VerticalLayout {
             UI.getCurrent().navigate("");
 
         } catch (BadCredentialsExceptions ex) {
-            Notification.show(ex.getMessage(), 5000, Notification.Position.MIDDLE);
+            Notification.show(ex.getMessage(), 1000, Notification.Position.MIDDLE);
 
 
         }
