@@ -16,7 +16,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Courses allCourse() {
-        return courseUrl.get().uri("/course/all").accept(MediaType.APPLICATION_JSON).retrieve()
-                .body(Courses.class);
+        return courseUrl.get().uri("/course/all").accept(MediaType.APPLICATION_JSON).retrieve().body(Courses.class);
+    }
+
+    @Override
+    public Courses findCursesBySubject(String subject) {
+        return courseUrl.get().uri(uriBuilder -> uriBuilder.path("course/{subject}/name").build(subject))
+                .accept(MediaType.APPLICATION_JSON).retrieve().body(Courses.class);
     }
 }
