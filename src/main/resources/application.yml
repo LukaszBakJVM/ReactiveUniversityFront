@@ -4,6 +4,6 @@ spring:
  application:
   name: ReactiveUniversityFront
 reactiveUrl: http://localhost:8080
-courseUrl: http://localhost:8081
+courseUrl: http://localhost:8084
 server:
   port: 9090
