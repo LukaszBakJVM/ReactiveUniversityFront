@@ -6,6 +6,7 @@ import org.example.reactiveuniversityfront.register.dto.RegistrationRequestDto;
 import org.example.reactiveuniversityfront.register.dto.RegistrationResponseDto;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -26,8 +27,10 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public RegistrationResponseDto createNewUser(RegistrationRequestDto dto) {
-        return restClient.post().uri("/user/registration").contentType(APPLICATION_JSON).body(dto).retrieve().onStatus(HttpStatusCode::is2xxSuccessful, (request, response) -> {
+    public RegistrationResponseDto createNewUser(RegistrationRequestDto dto,String bearer) {
+        return restClient.post().uri("/user/registration").contentType(APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + bearer).
+                body(dto).retrieve().onStatus(HttpStatusCode::is2xxSuccessful, (request, response) -> {
             if (response.getStatusCode().value() != 201) {
                 throw new RegistrationException("Blad serwera");
 
