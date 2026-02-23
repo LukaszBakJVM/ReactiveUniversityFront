@@ -23,7 +23,7 @@ public class IndexView extends VerticalLayout implements BeforeEnterObserver {
 
         if (userInfo == null) {
 
-            beforeEnterEvent.rerouteTo(LoginView.class);
+            beforeEnterEvent.forwardTo(CourseView.class);
         } else {
 
             switch (userInfo.role()) {

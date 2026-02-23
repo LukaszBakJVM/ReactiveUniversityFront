@@ -1,14 +1,19 @@
 package org.example.reactiveuniversityfront.views;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.example.reactiveuniversityfront.course.CourseService;
 import org.example.reactiveuniversityfront.course.dto.CourseDto;
 import org.example.reactiveuniversityfront.course.dto.Courses;
 
+@PageTitle("informacja")
 @Route("information")
 public class CourseView extends VerticalLayout {
 
@@ -32,19 +37,33 @@ public class CourseView extends VerticalLayout {
         course.setSizeFull();
 
 
-
         subjectField.setPlaceholder("Przedmiot");
         subjectField.setReadOnly(true);
+        subjectField.setRequired(true);
 
         Button searchAll = new Button("Wyszukaj kursy", event -> findCourse());
         Button searchBySubject = new Button("Wyszukaj kursy na podstawie przedmiotu", event -> findCourseBySubject());
+        Button login = new Button("Zaloguj się", e -> UI.getCurrent().navigate(LoginView.class));
 
-        add(searchAll, searchBySubject, subjectField, course);
+        HorizontalLayout buttonsLayout = new HorizontalLayout(searchBySubject, searchAll, login);
+
+
+        add(buttonsLayout, subjectField, course);
     }
 
+
     private void findCourseBySubject() {
-        Courses courses = courseService.findCursesBySubject(subjectField.getValue());
-        course.setItems(courses.courseDtos());
+
+        try {
+
+
+            Courses courses = courseService.findCursesBySubject(subjectField.getValue());
+            course.setItems(courses.courseDtos());
+        } catch (Exception e) {
+
+            Notification.show("Wybierz przedmiot", 1000, Notification.Position.MIDDLE);
+        }
+
     }
 
     private void findCourse() {
