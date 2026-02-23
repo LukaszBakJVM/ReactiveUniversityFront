@@ -11,38 +11,44 @@ import org.example.reactiveuniversityfront.course.dto.Courses;
 
 @Route("information")
 public class CourseView extends VerticalLayout {
+
     private final CourseService courseService;
-    private final Grid<CourseDto> course;
-    private  final TextField subjectField;
+    private final Grid<CourseDto> course = new Grid<>();
+    private final TextField subjectField = new TextField();
 
     public CourseView(CourseService courseService) {
         this.courseService = courseService;
-        course = new Grid<>();
+
         course.addColumn(CourseDto::courseName).setHeader("Kurs");
-        course.addColumn(CourseDto::subjects).setHeader("Przedmioty");
-        subjectField = new TextField();
+        course.addComponentColumn(courseDto -> {
+            VerticalLayout layout = new VerticalLayout();
+            for (String subject : courseDto.subjects()) {
+                Button button = new Button(subject);
+                button.addClickListener(e -> subjectField.setValue(subject));
+                layout.add(button);
+            }
+            return layout;
+        }).setHeader("Przedmioty");
+        course.setSizeFull();
+
+
+
         subjectField.setPlaceholder("Przedmiot");
-        subjectField.setRequired(true);
-        Button course = new Button("Wyszukaj kursy", event -> findCourse());
-        Button subject = new Button("Wyszukaj kursy na podstawie przdmiotu ",event->findCourseBySubject()) ;
-        add(course,subject,subjectField);
+        subjectField.setReadOnly(true);
+
+        Button searchAll = new Button("Wyszukaj kursy", event -> findCourse());
+        Button searchBySubject = new Button("Wyszukaj kursy na podstawie przedmiotu", event -> findCourseBySubject());
+
+        add(searchAll, searchBySubject, subjectField, course);
     }
 
     private void findCourseBySubject() {
-        course.setItems();
-
         Courses courses = courseService.findCursesBySubject(subjectField.getValue());
         course.setItems(courses.courseDtos());
-
-
     }
 
     private void findCourse() {
-        course.setItems();
         Courses courses = courseService.allCourse();
         course.setItems(courses.courseDtos());
-        add(course);
-
     }
-
 }
