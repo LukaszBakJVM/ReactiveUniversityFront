@@ -43,7 +43,8 @@ public class LoginView extends VerticalLayout {
 
 
         Button loginButton = new Button("zaloguj", event -> login());
-        add(header, emailField, passwordField, loginButton);
+        Button index = new Button("Powrót na strone główną",e -> UI.getCurrent().navigate(IndexView.class));
+        add(header, emailField, passwordField, loginButton,index);
     }
 
     private void login() {

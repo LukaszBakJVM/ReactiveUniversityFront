@@ -4,15 +4,15 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouterLink;
 
 @Route("admin")
 public class AdminView extends VerticalLayout {
     public AdminView() {
-        RouterLink link = new RouterLink("Zarejstruj się", RegisterView.class);
 
-        Button registration = new Button("Zarejstruj się", e -> UI.getCurrent().navigate(RegisterView.class));
-        add(registration, link);
+
+        Button registration = new Button("Zarejstruj osobę", e -> UI.getCurrent().navigate(RegisterView.class));
+        Button course = new Button("Dodaj  nowy  kurs", e -> UI.getCurrent().navigate(AdminCourseView.class));
+        add(registration, course);
 
 
     }
