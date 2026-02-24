@@ -15,12 +15,12 @@ public class AdminCourseServiceImpl implements AdminCourseService {
 
     }
 
-    CourseDto createNewCourse(CourseDto request, String bearer) {
+  public   CourseDto createNewCourse(CourseDto request, String bearer) {
         return course.post().uri("/course/").header(HttpHeaders.AUTHORIZATION, "Bearer " + bearer).body(request)
                 .retrieve().body(CourseDto.class);
     }
 
-    void deleteCourse(String courseName, String bearer) {
+   public void deleteCourse(String courseName, String bearer) {
         course.delete().uri(uriBuilder -> uriBuilder.path("/course//{courseName}").build(courseName))
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + bearer).retrieve().body(Void.class);
     }
