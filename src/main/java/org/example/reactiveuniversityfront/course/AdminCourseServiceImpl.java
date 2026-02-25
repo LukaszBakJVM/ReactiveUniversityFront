@@ -21,7 +21,7 @@ public class AdminCourseServiceImpl implements AdminCourseService {
     }
 
    public void deleteCourse(String courseName, String bearer) {
-        course.delete().uri(uriBuilder -> uriBuilder.path("/course//{courseName}").build(courseName))
+        course.delete().uri(uriBuilder -> uriBuilder.path("/course/{courseName}").build(courseName))
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + bearer).retrieve().body(Void.class);
     }
 

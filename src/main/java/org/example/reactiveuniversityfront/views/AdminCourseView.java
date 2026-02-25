@@ -38,7 +38,7 @@ public class AdminCourseView extends VerticalLayout {
 
 
             String token = authSession.getToken();
-            System.out.println(token);
+
 
             adminCourseService.deleteCourse(courseField.getValue(), token);
 
