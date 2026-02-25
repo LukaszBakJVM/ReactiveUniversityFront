@@ -33,14 +33,29 @@ public class RegisterView extends VerticalLayout implements BeforeEnterObserver 
         this.registerService = registerService;
         this.authSession = authSession;
 
+
         role = new ComboBox<>();
 
 
         Button save = new Button("Zapisz", new Icon(VaadinIcon.SAFE), clickEvent -> registerNewPerson());
         firstName = new TextField("Imie");
+        firstName.setPlaceholder("Imie");
+        firstName.setRequired(true);
+
         lastName = new TextField("Nazwisko");
+        lastName.setPlaceholder("Nazwisko");
+        lastName.setRequired(true);
+
+
         email = new EmailField("email");
+        email.setPlaceholder("email");
+        email.setRequired(true);
+        email.getElement().setAttribute("autocomplete", "new-email");
+        email.getEmptyValue();
+
         password = new PasswordField("hasło");
+        password.setPlaceholder("hasło");
+        password.getElement().setAttribute("autocomplete", "new-password");
 
 
         add(firstName, lastName, email, password, role, save);

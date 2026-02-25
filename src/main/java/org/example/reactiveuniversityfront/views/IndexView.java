@@ -28,13 +28,13 @@ public class IndexView extends VerticalLayout implements BeforeEnterObserver {
 
             switch (userInfo.role()) {
                 case "Office":
-                    beforeEnterEvent.rerouteTo(AdminView.class);
+                    beforeEnterEvent.forwardTo(AdminView.class);
                     break;
                 case "Teacher":
-                    beforeEnterEvent.rerouteTo(TeacherView.class);
+                    beforeEnterEvent.forwardTo(TeacherView.class);
                     break;
                 case "Student":
-                    beforeEnterEvent.rerouteTo(StudentView.class);
+                    beforeEnterEvent.forwardTo(StudentView.class);
                     break;
 
             }
