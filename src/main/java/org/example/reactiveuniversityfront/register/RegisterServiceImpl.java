@@ -1,7 +1,7 @@
 package org.example.reactiveuniversityfront.register;
 
 import org.example.reactiveuniversityfront.auth.AuthSession;
-import org.example.reactiveuniversityfront.exception.RegistrationException;
+import org.example.reactiveuniversityfront.exception.ConflictException;
 import org.example.reactiveuniversityfront.register.dto.RegistrationRequestDto;
 import org.example.reactiveuniversityfront.register.dto.RegistrationResponseDto;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,7 +32,7 @@ public class RegisterServiceImpl implements RegisterService {
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + bearer).
                 body(dto).retrieve().onStatus(HttpStatusCode::is2xxSuccessful, (request, response) -> {
             if (response.getStatusCode().value() != 201) {
-                throw new RegistrationException("Blad serwera");
+                throw new ConflictException("Blad serwera");
 
             }
         }).body(RegistrationResponseDto.class);

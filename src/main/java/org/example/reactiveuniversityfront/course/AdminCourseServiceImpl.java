@@ -16,7 +16,7 @@ public class AdminCourseServiceImpl implements AdminCourseService {
     }
 
   public   CourseDto createNewCourse(CourseDto request, String bearer) {
-        return course.post().uri("/course/").header(HttpHeaders.AUTHORIZATION, "Bearer " + bearer).body(request)
+        return course.post().uri("/course").header(HttpHeaders.AUTHORIZATION, "Bearer " + bearer).body(request)
                 .retrieve().body(CourseDto.class);
     }
 
